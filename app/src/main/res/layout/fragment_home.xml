@@ -24,9 +24,9 @@
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/walletZone"
         android:layout_width="0dp"
-        android:layout_height="136dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         android:layout_marginVertical="4dp"
         android:layout_marginStart="10dp"
@@ -39,29 +39,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dailyTipTextView">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Wallet"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/totalBalanceTextView"
-            app:layout_constraintTop_toBottomOf="@+id/totalBalanceTextView"
-            app:layout_constraintVertical_bias="1.0" />
-
         <TextView
             android:id="@+id/totalBalanceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Balance: 33333 "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="See All >"
+            app:layout_constraintBaseline_toBaselineOf="@+id/totalBalanceTextView"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_wallet_recycler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.312"
+            app:layout_constraintStart_toStartOf="@+id/totalBalanceTextView"
+            app:layout_constraintTop_toBottomOf="@+id/totalBalanceTextView"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/reportZone"
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:layout_marginHorizontal="4dp"
@@ -76,12 +84,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/walletZone"
         app:layout_constraintVertical_bias="0.019">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/transactionZone"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginHorizontal="4dp"
@@ -96,11 +105,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/reportZone"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/transaction"
+            android:id="@+id/home_transaction_recycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="4dp"

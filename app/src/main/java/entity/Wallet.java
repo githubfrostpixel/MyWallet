@@ -1,12 +1,26 @@
 package entity;
 
+
+
+import androidx.room.*;
+
+@Entity
 public class Wallet {
+    @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "balance")
     private int balance;
 
     public Wallet() {
     }
+    @Ignore
+    public Wallet(String name, int balance) {
+        this.name = name;
+        this.balance = balance;
+    }
+    @Ignore
     public Wallet(int id, String name, int balance) {
         this.id = id;
         this.name = name;
