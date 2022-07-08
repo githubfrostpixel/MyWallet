@@ -56,17 +56,19 @@ public class HomeFragment extends Fragment {
             editor.putBoolean("FIRST_RUN", true);
             editor.commit();
             TransactionTypeDao transactionTypeDao = db.transactionTypeDao();
-            transactionTypeDao.insert(new TransactionType("Deposit"));
-            transactionTypeDao.insert(new TransactionType("Withdraw"));
-            transactionTypeDao.insert(new TransactionType("Transfer"));
-            transactionTypeDao.insert(new TransactionType("Food & Drink"));
-            transactionTypeDao.insert(new TransactionType("Shopping"));
-            transactionTypeDao.insert(new TransactionType("Housing"));
-            transactionTypeDao.insert(new TransactionType("Transportation"));
-            transactionTypeDao.insert(new TransactionType("Vehical"));
-            transactionTypeDao.insert(new TransactionType("Life & Entertainment"));
-            transactionTypeDao.insert(new TransactionType("Communication, PC"));
-            transactionTypeDao.insert(new TransactionType("Financial expenses"));
+            transactionTypeDao.insert(new TransactionType("Deposit",0));
+            transactionTypeDao.insert(new TransactionType("Withdraw",1));
+            transactionTypeDao.insert(new TransactionType("Transfer",0));
+            transactionTypeDao.insert(new TransactionType("Transfer",1));
+            transactionTypeDao.insert(new TransactionType("Salary",0));
+            transactionTypeDao.insert(new TransactionType("Food & Drink",1));
+            transactionTypeDao.insert(new TransactionType("Shopping",1));
+            transactionTypeDao.insert(new TransactionType("Housing",1));
+            transactionTypeDao.insert(new TransactionType("Transportation",1));
+            transactionTypeDao.insert(new TransactionType("Vehical",1));
+            transactionTypeDao.insert(new TransactionType("Life & Entertainment",1));
+            transactionTypeDao.insert(new TransactionType("Communication, PC",1));
+            transactionTypeDao.insert(new TransactionType("Financial expenses",1));
 
 //            DUMMY DATA FOR DEMO ONLY
             WalletDao walletDao = db.walletDao();
