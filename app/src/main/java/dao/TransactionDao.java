@@ -17,6 +17,9 @@ public interface TransactionDao{
     void insertAll(Transaction... transactions);
     @Query("SELECT TypeID as TypeID,sum(value) as Total from `Transaction` GROUP BY TypeID ORDER BY Total DESC")
     List<TransactionSumByType> getTransactionSumByType();
+
+    @Query("SELECT TypeID as TypeID,sum(value) as Total from (SELECT* from `Transaction` where inorout=:inorout) GROUP BY TypeID ORDER BY Total DESC")
+    List<TransactionSumByType> getTransactionSumByTypeIO(int inorout);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction transaction);
 

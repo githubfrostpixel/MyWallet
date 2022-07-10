@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -105,6 +107,24 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager home_wallet_layout_manager= new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         home_wallet_recycler.setLayoutManager(home_wallet_layout_manager);
 //        REPORT
+        RadioButton incomeRadio=view.findViewById(R.id.radioButton);
+        RadioButton outcomeRadio=view.findViewById(R.id.radioButton2);
+        incomeRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    setData(db,0);
+                }
+            }
+        });
+        outcomeRadio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    setData(db,1);
+                }
+            }
+        });
         top1 = view.findViewById(R.id.top1);
         top2 = view.findViewById(R.id.top2);
         top3 = view.findViewById(R.id.top3);
@@ -114,7 +134,7 @@ public class HomeFragment extends Fragment {
         colorTop3=view.findViewById(R.id.colorTop3);
         colorOther=view.findViewById(R.id.colorOther);
         pieChart = view.findViewById(R.id.piechart);
-        setData(db);
+        setData(db,0);
 //        TRANSACTION
         TransactionDao transactionDao = db.transactionDao();
         List<Transaction> transactions = transactionDao.getAllSortedDate();
@@ -132,11 +152,12 @@ public class HomeFragment extends Fragment {
                 new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         home_transaction_recycler.setLayoutManager(home_transaction_layout_manager);
     }
-    private void setData(AppDatabase db)
+    private void setData(AppDatabase db,int inorout)
     {
+        pieChart.clearChart();
         TransactionDao transactionDao=db.transactionDao();
         TransactionTypeDao transactionTypeDao=db.transactionTypeDao();
-        List<TransactionSumByType> transactionSumByTypes =  transactionDao.getTransactionSumByType();
+        List<TransactionSumByType> transactionSumByTypes =  transactionDao.getTransactionSumByTypeIO(inorout);
         top1.setText("");
         colorTop1.setVisibility(View.INVISIBLE);
         top2.setText("");
