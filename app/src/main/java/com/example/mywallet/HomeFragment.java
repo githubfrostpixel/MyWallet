@@ -2,7 +2,7 @@ package com.example.mywallet;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,8 @@ public class HomeFragment extends Fragment {
         home_wallet_recycler.setAdapter(home_wallet_recycler_adapter);
         LinearLayoutManager home_wallet_layout_manager= new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         home_wallet_recycler.setLayoutManager(home_wallet_layout_manager);
+//        REPORT
+
 //        TRANSACTION
         TransactionDao transactionDao = db.transactionDao();
         List<Transaction> transactions = transactionDao.getAll();

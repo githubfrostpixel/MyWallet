@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:onClick="toReport">
 
     <TextView
         android:id="@+id/dailyTipTextView"
@@ -23,108 +25,126 @@
         app:layout_constraintVertical_bias="0.016"
         tools:visibility="visible" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/walletZone"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
         android:layout_marginVertical="4dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/layout_border"
+        android:elevation="10dp"
         android:onClick="toWallet"
         android:padding="16dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dailyTipTextView">
 
-        <TextView
-            android:id="@+id/totalBalanceTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="toWallet"
+            android:padding="4dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="See All >"
-            app:layout_constraintBaseline_toBaselineOf="@+id/totalBalanceTextView"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/totalBalanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_wallet_recycler"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.312"
-            app:layout_constraintStart_toStartOf="@+id/totalBalanceTextView"
-            app:layout_constraintTop_toBottomOf="@+id/totalBalanceTextView"
-            app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="toWallet"
+                android:text="See All >"
+                app:layout_constraintBaseline_toBaselineOf="@+id/totalBalanceTextView"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_wallet_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:onClick="toWallet"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.312"
+                app:layout_constraintStart_toStartOf="@+id/totalBalanceTextView"
+                app:layout_constraintTop_toBottomOf="@+id/totalBalanceTextView"
+                app:layout_constraintVertical_bias="0.0"
+                tools:itemCount="5"
+                tools:layoutManager="GridLayoutManager"
+                tools:listitem="@layout/recycler_view_item"
+                tools:spanCount="5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/reportZone"
-        android:layout_width="0dp"
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewReport"
+        android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginHorizontal="4dp"
-        android:layout_marginVertical="4dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/layout_border"
-        android:onClick="toReport"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/walletZone"
-        app:layout_constraintVertical_bias="0.019">
+        app:layout_constraintTop_toBottomOf="@+id/walletZone">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/transactionZone"
-        android:layout_width="0dp"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="4dp"
-        android:layout_marginVertical="4dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/layout_border"
+        android:layout_marginBottom="6dp"
         android:onClick="toHistory"
-        android:padding="4dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reportZone"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/cardViewReport">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_transaction_recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="4dp"
-            android:layout_marginHorizontal="4dp"
-            android:layout_marginVertical="4dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/transactionZone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="0dp"
+            android:layout_marginVertical="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:onClick="toHistory"
+            android:padding="4dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_transaction_recycler"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginVertical="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
