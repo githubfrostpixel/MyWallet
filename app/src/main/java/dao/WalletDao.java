@@ -10,6 +10,8 @@ import entity.Wallet;
 public interface WalletDao {
     @Query("SELECT * FROM Wallet")
     List<Wallet> getAll();
+    @Query("SELECT * From Wallet WHERE id=:id")
+    List<Wallet> getWalletByID(int id);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Wallet... wallets);
 

@@ -35,16 +35,26 @@ public class Transaction {
     private Date date;
     @ColumnInfo(name = "description")
     private String description;
-
+    @ColumnInfo(name = "inorout")
+    private int inorout;
     public Transaction() {
     }
     @Ignore
-    public Transaction(int typeId, int walletId,int value, Date date, String description) {
+    public Transaction(int typeId, int walletId,int value, Date date, String description,int inorout) {
         this.typeId = typeId;
         this.walletId = walletId;
         this.value = value;
         this.date = date;
         this.description = description;
+        this.inorout = inorout;
+    }
+
+    public int getInorout() {
+        return inorout;
+    }
+
+    public void setInorout(int inorout) {
+        this.inorout = inorout;
     }
 
     public int getValue() {
