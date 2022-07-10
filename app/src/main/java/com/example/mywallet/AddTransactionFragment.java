@@ -24,7 +24,7 @@ import dao.AppDatabase;
 import dao.TransactionDao;
 import dao.TransactionTypeDao;
 import dao.WalletDao;
-import dao.WalletDao_Impl;
+
 import entity.Transaction;
 import entity.TransactionType;
 import entity.Wallet;

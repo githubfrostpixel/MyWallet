@@ -5,6 +5,7 @@ import androidx.room.*;
 import java.util.List;
 
 import entity.Transaction;
+import entity.TransactionSumByType;
 
 @Dao
 public interface TransactionDao{
@@ -12,7 +13,8 @@ public interface TransactionDao{
     List<Transaction> getAll();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Transaction... transactions);
-
+    @Query("SELECT TypeID as TypeID,sum(value) as Total from `Transaction` GROUP BY TypeID ORDER BY Total DESC")
+    List<TransactionSumByType> getTransactionSumByType();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Transaction transaction);
 

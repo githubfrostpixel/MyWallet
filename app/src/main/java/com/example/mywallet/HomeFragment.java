@@ -1,6 +1,7 @@
 package com.example.mywallet;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -16,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -29,10 +33,14 @@ import dao.TransactionDao;
 import dao.TransactionTypeDao;
 import dao.WalletDao;
 import entity.Transaction;
+import entity.TransactionSumByType;
 import entity.TransactionType;
 import entity.Wallet;
 
 public class HomeFragment extends Fragment {
+    TextView top1, top2, top3, other;
+    PieChart pieChart;
+    View colorTop1,colorTop2,colorTop3,colorOther;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,11 +83,14 @@ public class HomeFragment extends Fragment {
 //            DUMMY DATA FOR DEMO ONLY
             WalletDao walletDao = db.walletDao();
             walletDao.insert(new Wallet("Wallet",1000000));
-            walletDao.insert(new Wallet("Bank",31012001)); //tinh lai balance cua wallet
+            walletDao.insert(new Wallet("Bank",1012001)); //tinh lai balance cua wallet
             TransactionDao transactionDao = db.transactionDao();
             transactionDao.insert(new Transaction(1,2,31012001,Date.from(LocalDate.of( 2022 , 7 , 1 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Luong thang 7"));
             transactionDao.insert(new Transaction(1,1,1500000,Date.from(LocalDate.of( 2022 , 7 , 1 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Tien Trong Vi"));
             transactionDao.insert(new Transaction(4,1,500000,Date.from(LocalDate.of( 2022 , 7 , 2 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Mua do an"));
+            transactionDao.insert(new Transaction(7,2,25000000,Date.from(LocalDate.of( 2022 , 7 , 2 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Mua laptop"));
+            transactionDao.insert(new Transaction(13,2,5000000,Date.from(LocalDate.of( 2022 , 7 , 2 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Tien Nha"));
+
         }
 //        WALLET
         WalletDao walletDao=db.walletDao();
@@ -94,7 +105,16 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager home_wallet_layout_manager= new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         home_wallet_recycler.setLayoutManager(home_wallet_layout_manager);
 //        REPORT
-
+        top1 = view.findViewById(R.id.top1);
+        top2 = view.findViewById(R.id.top2);
+        top3 = view.findViewById(R.id.top3);
+        other = view.findViewById(R.id.other);
+        colorTop1=view.findViewById(R.id.colorTop1);
+        colorTop2=view.findViewById(R.id.colorTop2);
+        colorTop3=view.findViewById(R.id.colorTop3);
+        colorOther=view.findViewById(R.id.colorOther);
+        pieChart = view.findViewById(R.id.piechart);
+        setData(db);
 //        TRANSACTION
         TransactionDao transactionDao = db.transactionDao();
         List<Transaction> transactions = transactionDao.getAll();
@@ -107,5 +127,95 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager home_transaction_layout_manager =
                 new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         home_transaction_recycler.setLayoutManager(home_transaction_layout_manager);
+    }
+    private void setData(AppDatabase db)
+    {
+        TransactionDao transactionDao=db.transactionDao();
+        TransactionTypeDao transactionTypeDao=db.transactionTypeDao();
+        List<TransactionSumByType> transactionSumByTypes =  transactionDao.getTransactionSumByType();
+        top1.setText("");
+        colorTop1.setVisibility(View.INVISIBLE);
+        top2.setText("");
+        colorTop2.setVisibility(View.INVISIBLE);
+        top3.setText("");
+        colorTop3.setVisibility(View.INVISIBLE);
+        other.setText("");
+        colorOther.setVisibility(View.INVISIBLE);
+        int count=0;
+        int total=0,top1value=0,top2value=0,top3value=0,othervalue=0;
+        int top1percent=0,top2percent=0,top3percent=0,otherpercent;
+        for(TransactionSumByType transactionSumByType: transactionSumByTypes ){
+            count++;
+            total+=transactionSumByType.getTotal();
+            switch (count){
+                case 1:
+                    top1.setText(transactionTypeDao.getTransactionTypeByID(transactionSumByType.getTypeID()).get(0).getName());
+                    top1value=transactionSumByType.getTotal();
+                    colorTop1.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    top2.setText(transactionTypeDao.getTransactionTypeByID(transactionSumByType.getTypeID()).get(0).getName());
+                    top2value=transactionSumByType.getTotal();
+                    colorTop2.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    top3.setText(transactionTypeDao.getTransactionTypeByID(transactionSumByType.getTypeID()).get(0).getName());
+                    top3value=transactionSumByType.getTotal();
+                    colorTop3.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    othervalue+=transactionSumByType.getTotal();
+                    other.setText("Other");
+                    colorOther.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+
+
+        for(int i=1;i<=transactionSumByTypes.size();i++){
+            switch (i){
+                case 1:
+                    int i1 = (int) ((top1value*1.0 / total) * 100);
+                    top1percent=i1;
+                    pieChart.addPieSlice(
+                            new PieModel(
+                                    "Top1",
+                                    top1percent,
+                                    Color.parseColor("#FFA726")));
+                    break;
+                case 2:
+                    int i2 = (int) ((top2value*1.0 / total) * 100);
+                    top2percent=i2;
+                    pieChart.addPieSlice(
+                            new PieModel(
+                                    "Top2",
+                                    top2percent,
+                                    Color.parseColor("#66BB6A")));
+                    break;
+                case 3:
+                    int i3 = (int) ((top3value*1.0 / total) * 100);
+                    top3percent=i3;
+                    pieChart.addPieSlice(
+                            new PieModel(
+                                    "Top3",
+                                    top3percent,
+                                    Color.parseColor("#EF5350")));
+                    break;
+                default:
+                    otherpercent=100-top1percent-top2percent-top3percent;
+                    pieChart.addPieSlice(
+                            new PieModel(
+                                    "Other",
+                                    otherpercent,
+                                    Color.parseColor("#29B6F6")));
+                    break;
+            }
+        }
+
+
+
+
+        // To animate the pie chart
+        pieChart.startAnimation();
     }
 }
