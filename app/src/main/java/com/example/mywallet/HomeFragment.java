@@ -57,6 +57,7 @@ public class HomeFragment extends Fragment {
             editor.putBoolean("FIRST_RUN", true);
             editor.commit();
             TransactionTypeDao transactionTypeDao = db.transactionTypeDao();
+            // 0 - income, 1 - outcome
             transactionTypeDao.insert(new TransactionType("Deposit",0));
             transactionTypeDao.insert(new TransactionType("Withdraw",1));
             transactionTypeDao.insert(new TransactionType("Transfer",0));
@@ -74,11 +75,11 @@ public class HomeFragment extends Fragment {
 //            DUMMY DATA FOR DEMO ONLY
             WalletDao walletDao = db.walletDao();
             walletDao.insert(new Wallet("Wallet",1000000));
-            walletDao.insert(new Wallet("Bank",31012001));
+            walletDao.insert(new Wallet("Bank",31012001)); //tinh lai balance cua wallet
             TransactionDao transactionDao = db.transactionDao();
-            transactionDao.insert(new Transaction("Tien Luong",1,2,31012001,Date.from(LocalDate.of( 2022 , 7 , 1 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Luong thang 7"));
-            transactionDao.insert(new Transaction("Tien trong vi",1,1,1500000,Date.from(LocalDate.of( 2022 , 7 , 1 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Tien Trong Vi"));
-            transactionDao.insert(new Transaction("Mua sam",4,1,-500000,Date.from(LocalDate.of( 2022 , 7 , 2 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Mua do an"));
+            transactionDao.insert(new Transaction(1,2,31012001,Date.from(LocalDate.of( 2022 , 7 , 1 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Luong thang 7"));
+            transactionDao.insert(new Transaction(1,1,1500000,Date.from(LocalDate.of( 2022 , 7 , 1 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Tien Trong Vi"));
+            transactionDao.insert(new Transaction(4,1,500000,Date.from(LocalDate.of( 2022 , 7 , 2 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Mua do an"));
         }
 //        WALLET
         WalletDao walletDao=db.walletDao();
@@ -97,10 +98,14 @@ public class HomeFragment extends Fragment {
 //        TRANSACTION
         TransactionDao transactionDao = db.transactionDao();
         List<Transaction> transactions = transactionDao.getAll();
+
         RecyclerView home_transaction_recycler= view.findViewById(R.id.home_transaction_recycler);
-        HomeTransactionRecyclerViewAdapter homeTransactionRecyclerViewAdapter = new HomeTransactionRecyclerViewAdapter(transactions,getContext());
+        HomeTransactionRecyclerViewAdapter homeTransactionRecyclerViewAdapter =
+                new HomeTransactionRecyclerViewAdapter(transactions,getContext());
+
         home_transaction_recycler.setAdapter(homeTransactionRecyclerViewAdapter);
-        LinearLayoutManager home_transaction_layout_manager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager home_transaction_layout_manager =
+                new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         home_transaction_recycler.setLayoutManager(home_transaction_layout_manager);
     }
 }

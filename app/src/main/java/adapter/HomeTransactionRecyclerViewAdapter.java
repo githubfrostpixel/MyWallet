@@ -14,6 +14,7 @@ import com.example.mywallet.R;
 import java.util.List;
 
 import entity.Transaction;
+import entity.TransactionType;
 
 public class HomeTransactionRecyclerViewAdapter extends RecyclerView.Adapter<HomeTransactionRecyclerViewAdapter.ViewHolder> {
     List<Transaction> transactions;
@@ -34,7 +35,8 @@ public class HomeTransactionRecyclerViewAdapter extends RecyclerView.Adapter<Hom
     @Override
     public void onBindViewHolder(@NonNull HomeTransactionRecyclerViewAdapter.ViewHolder holder, int position) {
         Transaction transaction = transactions.get(position);
-        holder.home_transaction_name.setText(transaction.getName());
+
+        holder.home_transaction_name.setText(Integer.toString(transaction.getTypeId()));
         holder.home_transaction_date.setText(transaction.getDate().toString());
         holder.home_transaction_value.setText(Integer.toString(transaction.getValue()));
         holder.home_transaction_wallet.setText(Integer.toString(transaction.getWalletId()));
