@@ -16,7 +16,6 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="10dp"
         android:elevation="10dp"
-        android:onClick="toWallet"
         android:padding="16dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,13 +44,12 @@
         android:layout_marginHorizontal="4dp"
         android:layout_marginVertical="4dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="10dp"
         android:elevation="10dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/walletZoneOption">
+        app:layout_constraintTop_toBottomOf="@+id/cardDate">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -241,6 +239,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="4dp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/walletZoneOption"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="4dp">
+
+            <TextView
+                android:id="@+id/datePicked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/pickDateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Pick Date" />
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

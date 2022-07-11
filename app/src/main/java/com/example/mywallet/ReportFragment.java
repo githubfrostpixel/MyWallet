@@ -1,11 +1,13 @@
 package com.example.mywallet;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,14 +15,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import adapter.HomeTransactionRecyclerViewAdapter;
@@ -37,6 +45,10 @@ public class ReportFragment extends Fragment {
     PieChart pieChart;
     View colorTop1,colorTop2,colorTop3,colorOther;
     int inorout=0,walletid=0;
+    private Button mPickDateButton;
+    private TextView mShowSelectedDateText;
+
+    Pair<Long, Long> selectedDate;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,8 +60,34 @@ public class ReportFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         AppDatabase db = Room.databaseBuilder(getActivity().getApplicationContext(),
                 AppDatabase.class, "mywallet").allowMainThreadQueries().build();
-
-
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0); // same for minutes and seconds
+        selectedDate= new Pair<Long,Long>(new Long(0),today.getTime().getTime());
+        mPickDateButton=view.findViewById(R.id.pickDateButton);
+        mShowSelectedDateText=view.findViewById(R.id.datePicked);
+        MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
+        materialDateBuilder.setTitleText("SELECT A DATE");
+        final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
+        mPickDateButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+                    }
+                });
+        materialDatePicker.addOnPositiveButtonClickListener(
+                new MaterialPickerOnPositiveButtonClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onPositiveButtonClick(Object selection) {
+                        selectedDate= (Pair<Long, Long>) materialDatePicker.getSelection();
+                        selectedDate= new Pair<Long,Long>(selectedDate.first-25200000,selectedDate.second-25200000);
+                        Log.i("info",selectedDate.first.toString());
+                        mShowSelectedDateText.setText(materialDatePicker.getHeaderText());
+                        setData(db);
+                        setListData(db, view);
+                    }
+                });
         setListData(db,view);
 
         RadioButton radioAll= view.findViewById(R.id.radioAll);
@@ -125,9 +163,9 @@ public class ReportFragment extends Fragment {
         TransactionTypeDao transactionTypeDao=db.transactionTypeDao();
         List<TransactionSumByType> transactionSumByTypes=null;
         if(walletid==0)
-            transactionSumByTypes =  transactionDao.getTransactionSumByTypeIO(inorout);
+            transactionSumByTypes =  transactionDao.getTransactionSumByTypeIORange(inorout,new Date(selectedDate.first),new Date(selectedDate.second));
         else
-            transactionSumByTypes =  transactionDao.getTransactionSumByTypeIOWallet(inorout,walletid);
+            transactionSumByTypes =  transactionDao.getTransactionSumByTypeIOWalletRange(inorout,walletid,new Date(selectedDate.first),new Date(selectedDate.second));
         top1.setText("");
         colorTop1.setVisibility(View.INVISIBLE);
         top2.setText("");
@@ -218,9 +256,9 @@ public class ReportFragment extends Fragment {
         List<Transaction> transactions=null;
         TransactionDao transactionDao = db.transactionDao();
         if (walletid==0)
-            transactions = transactionDao.getAllFilterIOSortedDate(inorout);
+            transactions = transactionDao.getAllFilterIOSortedDateRange(inorout,new Date(selectedDate.first),new Date(selectedDate.second));
         else
-            transactions = transactionDao.getAllFilterIOWalletSortedDate(inorout,walletid);
+            transactions = transactionDao.getAllFilterIOWalletSortedDateRange(inorout,walletid,new Date(selectedDate.first),new Date(selectedDate.second));
         for(Transaction transaction :  transactions){
             if(transaction.getInorout()==1){
                 transaction.setValue(transaction.getValue()*-1);

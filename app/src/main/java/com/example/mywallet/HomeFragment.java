@@ -22,6 +22,7 @@ import androidx.room.Room;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment {
         TextView totalBalanceTextView= view.findViewById(R.id.totalBalanceTextView);
         AppDatabase db = Room.databaseBuilder(getActivity().getApplicationContext(),
         AppDatabase.class, "mywallet").allowMainThreadQueries().build();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 //        FIRST TIME?
         boolean mboolean = false;
 
@@ -87,12 +89,17 @@ public class HomeFragment extends Fragment {
             walletDao.insert(new Wallet("Wallet",1000000));
             walletDao.insert(new Wallet("Bank",1012001)); //tinh lai balance cua wallet
             TransactionDao transactionDao = db.transactionDao();
-            transactionDao.insert(new Transaction(5,2,31012001,Date.from(LocalDate.of( 2022 , 7 , 1 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Luong thang 7",0));
-            transactionDao.insert(new Transaction(1,1,1500000,Date.from(LocalDate.of( 2022 , 7 , 1 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Tien Trong Vi",0));
-            transactionDao.insert(new Transaction(6,1,500000,Date.from(LocalDate.of( 2022 , 7 , 2 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Mua do an",1));
-            transactionDao.insert(new Transaction(7,2,25000000,Date.from(LocalDate.of( 2022 , 7 , 2 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Mua laptop",1));
-            transactionDao.insert(new Transaction(8,2,5000000,Date.from(LocalDate.of( 2022 , 7 , 2 ).atStartOfDay( ZoneId.of( "Asia/Ho_Chi_Minh" )).toInstant()),"Tien Nha",1));
-
+            try {
+                transactionDao.insert(new Transaction(5, 2, 31012001, sf.parse("2022-7-1"), "Luong thang 7", 0));
+                transactionDao.insert(new Transaction(1, 1, 1500000, sf.parse("2022-7-1"), "Tien Trong Vi", 0));
+                transactionDao.insert(new Transaction(6, 1, 500000, sf.parse("2022-7-2"), "Mua do an", 1));
+                transactionDao.insert(new Transaction(7, 2, 25000000, sf.parse("2022-7-2"), "Mua laptop", 1));
+                transactionDao.insert(new Transaction(8, 2, 5000000, sf.parse("2022-7-2"), "Tien Nha", 1));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
 //        WALLET
         WalletDao walletDao=db.walletDao();
