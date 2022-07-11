@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="-1dp">
+
 
     <TextView
         android:id="@+id/wallet"
@@ -27,18 +30,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/inc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="Income" />
+
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/outc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:text="Outcome" />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/inc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="Income" />
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -102,7 +106,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Date"
+        android:hint="Date yyyy-MM-dd"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/amount" />
@@ -115,7 +119,8 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Description"
+        android:hint="Description"
+        android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
 

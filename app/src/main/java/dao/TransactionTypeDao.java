@@ -19,6 +19,10 @@ public interface TransactionTypeDao {
 
     @Query("SELECT * FROM 'TransactionType' WHERE id =:id")
     List<TransactionType> getTransactionTypeByID(int id);
+
+    @Query("SELECT * FROM 'TransactionType' WHERE name =:name")
+    List<TransactionType> getTransactionTypeByName(String name);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(TransactionType... transactionTypes);
 

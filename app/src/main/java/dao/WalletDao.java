@@ -12,6 +12,9 @@ public interface WalletDao {
     List<Wallet> getAll();
     @Query("SELECT * From Wallet WHERE id=:id")
     List<Wallet> getWalletByID(int id);
+    @Query("SELECT * From Wallet WHERE name=:name")
+    List<Wallet> getWalletByName(String name);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Wallet... wallets);
 

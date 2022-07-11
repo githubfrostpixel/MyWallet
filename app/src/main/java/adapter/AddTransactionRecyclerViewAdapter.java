@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.LayoutRes;
@@ -21,16 +22,6 @@ import entity.TransactionType;
 import entity.Wallet;
 
 public class AddTransactionRecyclerViewAdapter extends RecyclerView.Adapter<AddTransactionRecyclerViewAdapter.ViewHolder> {
-    List<TransactionType> transactionTypes;
-    List<Wallet> wallets;
-    Context context;
-
-    public AddTransactionRecyclerViewAdapter(List<TransactionType> transactionTypes, List<Wallet> wallets, Context context) {
-        this.transactionTypes = transactionTypes;
-        this.wallets = wallets;
-        this.context = context;
-    }
-
 
     @NonNull
     @Override
@@ -53,18 +44,18 @@ public class AddTransactionRecyclerViewAdapter extends RecyclerView.Adapter<AddT
     public class ViewHolder extends RecyclerView.ViewHolder {
         Spinner transaction_type;
         Spinner wallet;
+        EditText amount;
+        EditText date;
+        EditText description;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             transaction_type = itemView.findViewById(R.id.transaction_type1);
             wallet = itemView.findViewById(R.id.wallet1);
+            amount = itemView.findViewById(R.id.amount);
+            date = itemView.findViewById(R.id.date);
+            description = itemView.findViewById(R.id.description);
         }
     }
 
-    private class OnItemClickListener1 implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-        }
-    }
 }

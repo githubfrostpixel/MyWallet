@@ -103,9 +103,11 @@ public class HomeFragment extends Fragment {
             totalBalance+=wallet.getBalance();
         totalBalanceTextView.setText("Total Balance: "+ totalBalance+ "₫");
         RecyclerView home_wallet_recycler = view.findViewById(R.id.home_wallet_recycler);
-        HomeWalletRecyclerViewAdapter home_wallet_recycler_adapter = new HomeWalletRecyclerViewAdapter(wallets,getContext());
+        HomeWalletRecyclerViewAdapter home_wallet_recycler_adapter =
+                new HomeWalletRecyclerViewAdapter(wallets,getContext());
         home_wallet_recycler.setAdapter(home_wallet_recycler_adapter);
-        LinearLayoutManager home_wallet_layout_manager= new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager home_wallet_layout_manager =
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         home_wallet_recycler.setLayoutManager(home_wallet_layout_manager);
 //        REPORT
         RadioButton incomeRadio=view.findViewById(R.id.radioButton);
@@ -237,8 +239,6 @@ public class HomeFragment extends Fragment {
                     break;
             }
         }
-
-
 
 
         // To animate the pie chart
