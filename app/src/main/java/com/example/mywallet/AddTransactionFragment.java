@@ -17,6 +17,7 @@ import androidx.room.Room;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import adapter.AddTransactionRecyclerViewAdapter;
@@ -50,19 +51,48 @@ public class AddTransactionFragment extends Fragment {
 
         WalletDao walletDao = db.walletDao();
         List<Wallet> wallets = walletDao.getAll();
+        ArrayAdapter<String> spinnerAdapter1 =
+                new ArrayAdapter<String>(getContext(),
+                        android.R.layout.simple_spinner_item, new ArrayList<>());
+        spinnerAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        wallet.setAdapter(spinnerAdapter1);
+
+        for (int i = 0; i < wallets.size(); i++) {
+            spinnerAdapter1.addAll(String.valueOf(wallets.get(i).getName()));
+        }
+        spinnerAdapter1.notifyDataSetChanged();
 
         TransactionTypeDao transactionTypeDao = db.transactionTypeDao();
+        ArrayAdapter<String> spinnerAdapter =
+                new ArrayAdapter<String>(getContext(),
+                        android.R.layout.simple_spinner_item, new ArrayList<>());
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        types.setAdapter(spinnerAdapter);
+
+        //List
+        List<TransactionType> transactionTypes = transactionTypeDao.getType(tabLayout.getSelectedTabPosition());
+        for (int i = 0; i < transactionTypes.size(); i++) {
+            spinnerAdapter.addAll(String.valueOf(transactionTypes.get(i).getName()));
+        }
+
+        spinnerAdapter.notifyDataSetChanged();
+
+        //onClick tab
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                List<TransactionType> transactionTypes = transactionTypeDao.getType(tab.getPosition());
-                ArrayAdapter<CharSequence> adapter =
-                        new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, transactionTypes);
-// Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-                types.setAdapter(adapter);
+                ArrayAdapter<String> spinnerAdapter2 =
+                        new ArrayAdapter<String>(getContext(),
+                                android.R.layout.simple_spinner_item, new ArrayList<>());
+                spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                types.setAdapter(spinnerAdapter2);
 
+                List<TransactionType> transType = transactionTypeDao.getType(tab.getPosition());
+                for (int i = 0; i < transType.size(); i++) {
+                    spinnerAdapter2.addAll(String.valueOf(transType.get(i).getName()));
+                }
+
+                spinnerAdapter2.notifyDataSetChanged();
 
             }
 
