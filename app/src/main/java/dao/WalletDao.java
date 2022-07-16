@@ -20,7 +20,8 @@ public interface WalletDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Wallet wallet);
-
+    @Update
+    void update(Wallet wallet);
     @Delete
     void delete(Wallet wallet);
 }

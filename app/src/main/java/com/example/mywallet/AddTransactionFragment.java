@@ -128,12 +128,14 @@ public class AddTransactionFragment extends Fragment {
         btn_add_transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int typeid =
-                        transactionTypeDao.getTransactionTypeByName(types.getSelectedItem().toString()).get(0).getId();
+
+                int typeid = transactionTypeDao.getTransactionTypeByName(types.getSelectedItem().toString()).get(0).getId();
+                Wallet walletTmp=walletDao.getWalletByName(wallet.getSelectedItem().toString()).get(0);
                 int walletid =
-                        walletDao.getWalletByName(wallet.getSelectedItem().toString()).get(0).getId();
+                        walletTmp.getId();
                 //Integer.parseInt(String.valueOf(wallet.getSelectedItemId()));
                 int value = Integer.parseInt(amount.getText().toString().trim());
+
                 String raw_date = date.getText().toString().trim();
                 Date trans_date = null;
                 try {
@@ -143,7 +145,11 @@ public class AddTransactionFragment extends Fragment {
                 }
                 String description = desc.getText().toString().trim();
                 int inorout = tabLayout.getSelectedTabPosition();
-
+                if(inorout==0)
+                    walletTmp.setBalance(walletTmp.getBalance()+value);
+                else
+                    walletTmp.setBalance(walletTmp.getBalance()-value);
+                walletDao.update(walletTmp);
                 if (trans_date == null
                         || amount == null
                         || TextUtils.isEmpty(description)) {
