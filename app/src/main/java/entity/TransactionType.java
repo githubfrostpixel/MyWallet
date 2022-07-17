@@ -11,6 +11,8 @@ public class TransactionType {
     private int id;
     @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "type")
+    private int type;
 
     public TransactionType() {
     }
@@ -19,9 +21,17 @@ public class TransactionType {
         this.name = name;
     }
     @Ignore
-    public TransactionType(int id, String name) {
-        this.id = id;
+    public TransactionType(String name,int type) {
         this.name = name;
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getId() {

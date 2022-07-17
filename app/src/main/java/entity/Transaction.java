@@ -25,8 +25,6 @@ import utility.DateConverter;
 public class Transaction {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "name")
-    private String name;
     @ColumnInfo(name = "typeId",index = true)
     private int typeId;
     @ColumnInfo(name = "walletId",index = true)
@@ -37,17 +35,26 @@ public class Transaction {
     private Date date;
     @ColumnInfo(name = "description")
     private String description;
-
+    @ColumnInfo(name = "inorout")
+    private int inorout;
     public Transaction() {
     }
     @Ignore
-    public Transaction(String name, int typeId, int walletId,int value, Date date, String description) {
-        this.name = name;
+    public Transaction(int typeId, int walletId,int value, Date date, String description,int inorout) {
         this.typeId = typeId;
         this.walletId = walletId;
         this.value = value;
         this.date = date;
         this.description = description;
+        this.inorout = inorout;
+    }
+
+    public int getInorout() {
+        return inorout;
+    }
+
+    public void setInorout(int inorout) {
+        this.inorout = inorout;
     }
 
     public int getValue() {
@@ -64,14 +71,6 @@ public class Transaction {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getTypeId() {
