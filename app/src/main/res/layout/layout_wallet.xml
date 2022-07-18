@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewWallet"
+            android:layout_width="86dp"
+            android:layout_height="36dp"
+            android:layout_margin="5dp"
+            android:layout_weight="0"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameWallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/balanceWallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Value" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/editWallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="editWalletClick"
+            android:text="Edit" />
+
+    </LinearLayout>
+
+</LinearLayout>
