@@ -3,6 +3,7 @@ package adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -83,6 +84,13 @@ private WalletFragment walletFragment;
                 PopupMenu popupMenu = new PopupMenu(parent.getContext(), editWallet);
                 popupMenu.inflate(R.menu.layout_popup_menu);
                 Menu menu = popupMenu.getMenu();
+                menu.getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(v.getContext(),"TEST",10);
+                        return true;
+                    }
+                });
                 popupMenu.show();
             }
         });

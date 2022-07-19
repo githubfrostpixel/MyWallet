@@ -77,6 +77,8 @@ public class HomeFragment extends Fragment {
             transactionTypeDao.insert(new TransactionType("Life & Entertainment",1));
             transactionTypeDao.insert(new TransactionType("Communication, PC",1));
             transactionTypeDao.insert(new TransactionType("Financial expenses",1));
+            transactionTypeDao.insert(new TransactionType("DeleteWallet",0));
+            transactionTypeDao.insert(new TransactionType("DeleteWallet",1));
 
 //            DUMMY DATA FOR DEMO ONLY
             WalletDao walletDao = db.walletDao();

@@ -134,8 +134,14 @@ public class AddTransactionFragment extends Fragment {
                 int walletid =
                         walletTmp.getId();
                 //Integer.parseInt(String.valueOf(wallet.getSelectedItemId()));
-                int value = Integer.parseInt(amount.getText().toString().trim());
-
+                int value=0;
+                try {
+                    value = Integer.parseInt(amount.getText().toString().trim());
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
                 String raw_date = date.getText().toString().trim();
                 Date trans_date = null;
                 try {
@@ -145,15 +151,22 @@ public class AddTransactionFragment extends Fragment {
                 }
                 String description = desc.getText().toString().trim();
                 int inorout = tabLayout.getSelectedTabPosition();
+                if(typeid==14 || typeid==15){
+                    walletDao.delete(walletTmp);
+                    Toast.makeText(getContext(), "Wallet Deleted", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(inorout==0)
                     walletTmp.setBalance(walletTmp.getBalance()+value);
                 else
                     walletTmp.setBalance(walletTmp.getBalance()-value);
+
                 walletDao.update(walletTmp);
+
                 if (trans_date == null
                         || amount == null
                         || TextUtils.isEmpty(description)) {
-                    Toast.makeText(getContext(), "PLease check again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please check again", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
